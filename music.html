@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUSIC</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">IK KAHANI</h2>
+            <h3 id="artist">GAJENDRA VERMA</h3>
+            <div class="image_container">
+                <img src="image/express.jpg" alt="">
+            </div>
+            <audio src="song/express.mp3" controls></audio>
+            <!-- controls -->
+
+            <div class="music_controls">
+                <i class="fas fa-circle-left main_button" id="prev" title="Previous"></i>
+                <i class="fas fa-circle-play main_button" id="play" title="Play"></i>
+                <i class="fas fa-circle-right main_button" id="next" title="Next"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        const music=document.querySelector("audio")
+        const play=document.getElementById("play")
+        const image=document.querySelector("img")
+        const title=document.getElementById("title")
+        const artist=document.getElementById("artist")
+        const prev=document.getElementById("prev")
+        const next=document.getElementById("next")
+
+        let songs=[{
+            name:"express",
+            artist:"NIRAJ SRIDHAR",
+            title:"express "
+        },{
+            name:"aaram aata hai",
+            artist:"BILAL",
+            title:"aaram aata hai"
+        },{
+            name:"pasuri",
+            artist:"GAJENDRA VERMA",
+            title:"pasuri"
+        },{
+            name:"ajnabi",
+            artist:"GURUNAM BHULLAR",
+            title:"ajnabi"
+        },{
+            name:"tum hi ho",
+            artist:"RAHAT FATEH ALI KHAN",
+            title:"tum hi ho"
+        }]
+
+        let isPlaying=false
+        const playMusic=()=>{
+            isPlaying=true
+            music.play();
+            play.classList.replace("fa-play", "fa-pause")
+        };
+        const pauseMusic=()=>{
+            isPlaying=false
+            music.pause();
+            play.classList.replace("fa-pause","fa-play")
+        };
+
+        play.addEventListener("click",()=>{
+            if(isPlaying){
+                pauseMusic()
+            }
+            else{
+                playMusic()
+            }
+        })
+        let leadSong=(songs)=>{
+            title.textContent=songs.title
+            artist.textContent=songs.artist
+            music.src="song/"+songs.name+".mp3"
+            image.src="image/"+songs.name+".jpg"
+        }
+        let songIndex=0
+        const nextSong=()=>{
+            songIndex=(songIndex+1)%songs.length;
+            leadSong(songs[songIndex]);
+            playMusic();
+        }
+
+        const prevSong=()=>{
+            songIndex=(songIndex-1)%songs.length;
+            leadSong(songs[songIndex]);
+            playMusic();
+        }
+
+        next.addEventListener("click", nextSong);
+        prev.addEventListener("click", prevSong);
+    </script>
+</body>
+</html>
+ 
